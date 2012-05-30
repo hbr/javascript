@@ -1,0 +1,285 @@
+Access to nodevalues:
+
+    <html>
+      <body>
+
+        <p id="intro">Hello World!</p>
+
+        <script type="text/javascript">
+          txtnode=document.getElementById("intro").childNodes[0];
+          txt=txtnode.nodeValue;
+          document.write("<p>The text from the intro paragraph: " 
+                             + txt + "</p>");
+          txtnode.nodeValue = "Hello new world!";
+        </script>
+
+      </body>
+    </html>
+
+
+
+
+    <html>
+    <body>
+
+    <p id="intro">Hello World!</p>
+
+    <script type="text/javascript">
+    x=document.getElementById("intro");
+    document.write(x.firstChild.nodeValue);
+    </script>
+
+    </body>
+    </html>
+
+
+Change of attributes:
+
+    <html>
+    <body>
+
+    <script type="text/javascript">
+    document.body.bgColor="lavender";
+    </script>
+
+    </body>
+    </html> 
+
+
+Change of background color with a button:
+
+a) inline:
+
+    <html>
+    <body>
+    <input type="button" 
+           onclick="document.body.bgColor='lavender';" 
+           value="Change background color" />
+    </body>
+    </html>
+
+
+b) with a function:
+
+    <html>
+    <head>
+    <script type="text/javascript">
+      function ChangeText() {
+        document.getElementById("p1").innerHTML="New text!";
+      }
+    </script>
+    </head>
+
+    <body>
+    <p id="p1">Hello world!</p>
+    <input type="button" onclick="ChangeText()" value="Change text" />
+    </body>
+    </html> 
+
+
+c) changing the style of an element
+
+    <html>
+    <head>
+    <script type="text/javascript">
+    function ChangeStyle()
+    {
+    document.getElementById("p1").style.color="blue";
+    document.getElementById("p1").style.fontFamily="Arial";
+    document.getElementById("p1").style.fontSize="larger";
+    }
+    </script>
+    </head>
+    <body>
+
+    <p id="p1">Hello world!</p>
+    <input type="button" onclick="ChangeStyle()" value="Change style" />
+
+    </body>
+    </html>
+
+
+
+
+Keypressed:
+
+    <html>
+    <head>
+    <script type="text/javascript">
+    function whichButton(event)
+    {
+    alert(event.keyCode);
+    }
+
+    </script>
+    </head>
+
+    <body onkeyup="whichButton(event)"> 
+
+    <p><b>Note:</b> Make sure the right frame has focus when trying this
+    example!</p> 
+    <p>Press a key on your keyboard. An alert box will alert the
+    keycode of the key.</p> 
+    </body>
+
+    </html>
+
+
+
+
+
+Shift key pressed?
+
+    <html>
+    <head>
+    <script type="text/javascript">
+    function isKeyPressed(event)
+    {
+    if (event.shiftKey==1)
+      {
+      alert("The shift key was pressed!");
+      }
+    else
+      {
+      alert("The shift key was NOT pressed!");
+      }
+    }
+    </script>
+    </head>
+
+    <body onmousedown="isKeyPressed(event)">
+
+    <p>Click somewhere in the document. An alert box will tell you if you
+    pressed the shift key or not.</p>
+
+    </body>
+    </html>
+
+
+Mouse button event:
+
+    <html>
+    <head>
+    <script type="text/javascript">
+    function WhichButton(event)
+    {
+    if ('which' in event)
+      {
+      switch (event.which)
+        {
+        case 1:
+          alert ("Left mouse button was pressed");
+          break;
+        case 2:
+          alert ("Middle mouse button was pressed");
+          break;
+        case 3:
+          alert ("Right mouse button was pressed");
+          break;
+        }
+      }
+    else
+      {
+      // IE before version 9
+      if ('button' in event)
+        {
+        var buttons="";
+        if (event.button & 1)
+          {buttons+="left";}
+        if (event.button & 2)
+          {
+          if (buttons=="")
+            {buttons+="right";}
+          else
+            {buttons+=" + right";}
+          }
+        if (event.button & 4)
+          {
+          if (buttons=="")
+            {buttons+="middle";}
+          else
+            {buttons+=" + middle";}
+          }
+          alert ("The following button was pressed: " + buttons);
+        }
+      }
+    }
+    </script>
+    </head>
+    <body>
+
+    <div onmousedown="WhichButton(event);">
+    Press a mouse button over this text!
+    </div>
+
+    </body>
+    </html>
+
+
+
+Get the position of the cursor:
+
+    <html>
+    <head>
+
+    <script type="text/javascript">
+    function coordinates(event)
+    {
+    var x=event.screenX;
+    var y=event.screenY;
+    alert("X=" + x + " Y=" + y);
+    }
+
+    </script>
+    </head>
+    <body onmousedown="coordinates(event)">
+
+    <p> Click somewhere in the document. An alert box will alert the x and y
+    coordinates of the cursor, relative to the screen.  </p>
+
+    </body>
+    </html>
+
+
+
+Get the element on which has been clicked:
+
+    <html>
+    <head>
+    <script type="text/javascript">
+    function whichElement(e)
+    {
+    var targ;
+    var txt;
+    if (!e)
+      {
+      var e=window.event;
+      txt="e";
+      }
+    if (e.target)
+      {
+      targ=e.target;
+      txt="e.target";
+      }
+    else if (e.srcElement)
+      {
+      targ=e.srcElement;
+      txt="e.srcElement";
+      }
+    var tname;
+    tname=targ.tagName;
+    var txt2 = targ.firstChild.nodeValue;
+    alert("You clicked on a " + tname + " element(" + txt + "/" + txt2 + ").");
+    }
+    </script>
+    </head>
+    <body onmousedown="whichElement(event)">
+
+    <p>Click somewhere in the document. An alert box will alert the name of the element you clicked on.</p>
+    <h3>This is a heading</h3>
+    <img border="0" src="smiley.gif" alt="Smiley" width="32" height="32" />
+    <p>This is a paragraph.</p>
+
+    </body>
+    </html>
+
